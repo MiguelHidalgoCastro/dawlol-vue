@@ -1,0 +1,38 @@
+nav span, #footer span{
+	cursor: pointer;
+}
+
+main{
+	min-height: 80vh;
+	height: auto !important;
+	height: 100%;
+}
+
+.activo{
+	display: block;
+}
+.inactivo{
+	display: none;
+}
+
+
+.cookies {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: black;
+	color: white;
+	font-family: arial;
+	text-align: center;
+}
+
+.cookies__boton {
+	background: initial;
+	border: 2px solid white;
+	padding: 1rem;
+	font-size: 1rem;
+	color: white;
+	width: 5rem;
+	text-align: center;
+}
