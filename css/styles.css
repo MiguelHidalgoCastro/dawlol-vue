@@ -1,20 +1,27 @@
-nav span, #footer span{
+nav span,
+#footer span,
+#terms {
 	cursor: pointer;
 }
 
-main{
+main {
 	min-height: 80vh;
 	height: auto !important;
 	height: 100%;
 }
 
-.activo{
+.activo {
 	display: block;
 }
-.inactivo{
+
+.inactivo {
 	display: none;
 }
 
+button,
+#vistaListaCRUD span {
+	width: 5em;
+}
 
 .cookies {
 	position: fixed;
@@ -33,6 +40,6 @@ main{
 	padding: 1rem;
 	font-size: 1rem;
 	color: white;
-	width: 5rem;
+	width: 8rem;
 	text-align: center;
 }

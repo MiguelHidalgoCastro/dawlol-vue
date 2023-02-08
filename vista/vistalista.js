@@ -1,19 +1,22 @@
-export { VistaLista }
-const VistaLista = Vue.createApp({
-	data() {
-		return {
-			controlador: null,
-			titulo: 'Vista Lista',
-			clase: 'inactivo'
-		}
-	},
-	template:
-		`
+export function VistaLista(controlador) {
+	return Vue.createApp({
+		data() {
+			return {
+				controlador: controlador,
+				titulo: 'Vista Lista',
+				clase: 'inactivo',
+				listaCoches: ''
+			}
+		},
+		template:
+			`
 	<div class="container col-10" :class=clase>
 	<!--Titulo-->
 	<div class="row">
 		<div class="col" id="tituloListadoCRUD">
 			<h3 class="fw-bold mb-3 mt-4">Listado de coches</h3>
+			<h5>añadir los condicionales para las medias querys</h5> 
+			<h5>Quedar mejor el footer cuando cambie la query</h5>  
 		</div>
 	</div>
 
@@ -23,7 +26,7 @@ const VistaLista = Vue.createApp({
 			<h4 class="fw-bold">Búsqueda</h4>
 		</div>
 		<div class="col-sm-4">
-			<label for="enFabh" style="display: none;">Hola</label>
+			<label for="enFabh" style="display: none;">H</label>
 			<select id="enFabh" class="form-select">
 				<option selected>Marca</option>
 				<option>Modelo</option>
@@ -104,7 +107,7 @@ const VistaLista = Vue.createApp({
 			</select>
 		</div>
 		<div class="col-sm-2">
-			<button class="btn btn-secondary" id="btnBuscar">Buscar</button>
+			<button class="btn btn-secondary" id="btnBuscar" @click=buscar>Buscar</button>
 		</div>
 	</div>
 
@@ -118,80 +121,20 @@ const VistaLista = Vue.createApp({
 					<th scope="col">Modelo</th>
 					<th scope="col">Año</th>
 					<th scope="col">Precio</th>
-					<th scope="col"></th>
+					<th scope="col">Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<th><img src="img/audi a3.jpg" width="80" alt=""></th>
-					<td>Audi</td>
-					<td>A3</td>
-					<td>15/05/2010</td>
-					<td scope="row">9.900€</td>
+				<tr v-for="coche in listaCoches">
+					<td><img width="80" :src=coche.imagen></td>
+					<td>{{coche.modelo}}</td>
+					<td>{{coche.marca}}</td>
+					<td>{{coche.fechaFabricacion}}</td>
+					<td>{{coche.precio}}€</td>
 					<td>
-						<span class="btn btn-secondary me-2" @click=consultar>Ver</span>
-						<span class="btn btn-warning text-white me-2" @click=modificar>Editar</span>
-						<span class="btn btn-danger" @click=borrar>Borrar</span>
-					</td>
-				</tr>
-				<tr>
-					<th><img src="img/cupra ateca.jpg" width="80" alt=""></th>
-					<td>Cupra</td>
-					<td>Ateca</td>
-					<td>18/05/2020</td>
-					<td scope="row">14.900€</td>
-					<td>
-						<span class="btn btn-secondary me-2" @click=consultar>Ver</span>
-						<span class="btn btn-warning text-white me-2" @click=modificar>Editar</span>
-						<span class="btn btn-danger" @click=borrar>Borrar</span>
-					</td>
-				</tr>
-				<tr>
-					<th><img src="img/focus.jpg" width="80" alt=""></th>
-					<td>Ford</td>
-					<td>Focus</td>
-					<td>15/05/2017</td>
-					<td scope="row">12.900€</td>
-					<td>
-						<span class="btn btn-secondary me-2" @click=consultar>Ver</span>
-						<span class="btn btn-warning text-white me-2" @click=modificar>Editar</span>
-						<span class="btn btn-danger" @click=borrar>Borrar</span>
-					</td>
-				</tr>
-				<tr>
-					<th><img src="img/audi a3.jpg" width="80" alt=""></th>
-					<td>Audi</td>
-					<td>A3</td>
-					<td>15/05/2010</td>
-					<td scope="row">9.900€</td>
-					<td>
-						<span class="btn btn-secondary me-2" @click=consultar>Ver</span>
-						<span class="btn btn-warning text-white me-2" @click=modificar>Editar</span>
-						<span class="btn btn-danger" @click=borrar>Borrar</span>
-					</td>
-				</tr>
-				<tr>
-					<th><img src="img/cupra ateca.jpg" width="80" alt=""></th>
-					<td>Cupra</td>
-					<td>Ateca</td>
-					<td>18/05/2020</td>
-					<td scope="row">14.900€</td>
-					<td>
-						<span class="btn btn-secondary me-2" @click=consultar>Ver</span>
-						<span class="btn btn-warning text-white me-2" @click=modificar>Editar</span>
-						<span class="btn btn-danger" @click=borrar>Borrar</span>
-					</td>
-				</tr>
-				<tr>
-					<th><img src="img/focus.jpg" width="80" alt=""></th>
-					<td>Ford</td>
-					<td>Focus</td>
-					<td>15/05/2017</td>
-					<td scope="row">12.900€</td>
-					<td>
-						<span class="btn btn-secondary me-2" @click=consultar>Ver</span>
-						<span class="btn btn-warning text-white me-2" @click=modificar>Editar</span>
-						<span class="btn btn-danger" @click=borrar>Borrar</span>
+						<a class="btn btn-secondary me-1" @click=consultar(coche.id)><em class="bi bi-search"></em></a>
+						<a class="btn btn-warning me-1" @click=modificar(coche.id)><em class="bi bi-pencil-square"></em></a>
+						<a class="btn btn-danger" @click=borrar(coche.id)><em class="bi bi-trash-fill"></em></a>
 					</td>
 				</tr>
 			</tbody>
@@ -200,24 +143,34 @@ const VistaLista = Vue.createApp({
 	</div>
 	`,
 
-	/*'<div :class=clase><h1>{{ titulo }}</h1></div>',*/
-	methods: {
-		mostrar(activo) {
-			if (activo)
-				this.clase = 'activo'
-			else
-				this.clase = 'inactivo'
-		},
 
-		consultar(){
-			this.controlador.mostrarConsultar()
-		},
-		modificar(){
-			this.controlador.mostrarModificar()
-		},
+		methods: {
+			mostrar(activo) {
+				if (activo)
+					this.clase = 'activo'
+				else
+					this.clase = 'inactivo'
+			},
 
-		borrar(){
-			console.log('borrando');
+			listar(lista) {
+				this.listaCoches = lista
+			},
+
+			buscar() {
+
+			},
+
+			consultar(id) {
+				console.log(id);
+			},
+			modificar(id) {
+				console.log(id);
+				//this.controlador.mostrarModificar(id)
+			},
+
+			borrar(id) {
+				this.controlador.borrar(id)
+			}
 		}
-	}
-})
+	})
+}

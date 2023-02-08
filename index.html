@@ -8,13 +8,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Gestionacars</title>
 </head>
 
 <body>
     <main>
+
+
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm justify-content-between" id="navbar">
 
@@ -43,9 +45,28 @@
         <section class="cookies">
             <h2 class="cookies__titulo">¿Aceptas nuestras Cookies?</h2>
             <p class="cookies__texto">Usamos cookies para mejorar tu experiencia en la web.</p>
+            <p class="cookies__texto" id="terms"><u>Más Información</u></p>
+
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-4">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="seguimientoVistas">Seguimiento de Visitas de
+                            usuario</label>
+                        <input class="form-check-input" type="checkbox" id="seguimientoVistas">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-check form-switch">
+                        <label class="form-check-label" for="ultimoElemento">Ultimo Elemento Insertado</label>
+                        <input class="form-check-input" type="checkbox" id="ultimoElemento">
+                    </div>
+                </div>
+            </div>
             <div class="cookies__botones">
                 <button class="cookies__boton cookies__boton--no">No</button>
                 <button class="cookies__boton cookies__boton--si">Si</button>
+                <button class="cookies__boton cookies__boton--per">Personalizado</button>
             </div>
         </section>
 
@@ -65,7 +86,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-<script type=module src=controlador.js></script>
+<script type=module src='controlador/controlador.js'></script>
 
 <script defer>
     let cookies = () => {
@@ -76,14 +97,13 @@
         //-----------------------------------------------------
         // Configuración
         //-----------------------------------------------------
-        const urlsScriptsCookies = ['https://analytics.google.com'];
-       // const urlsScriptsCookies = ['https://analytics.google.com', 'https://facebook.com'];
-        
+        const urlsScriptsCookies = [];
+        // const urlsScriptsCookies = ['https://analytics.google.com', 'https://facebook.com'];
+
         function contenidoScriptsCookies() {
-            ////////////  ¿Google Analítics? /////////////
-            ////////////  ¿Facebook Pixel? /////////////
-            ////////////  ¿Admob? /////////////
-            ////////////  etc  /////////////
+            let veces = parseInt(localStorage.getItem('cookieVisitas'))
+           //console.log(veces);
+            localStorage.setItem('cookieVisitas', ++veces)
         }
 
 
@@ -93,7 +113,11 @@
         const seccionCookie = document.querySelector('section.cookies');
         const cookieSi = document.querySelector('.cookies__boton--si');
         const cookieNo = document.querySelector('.cookies__boton--no');
+        const cookiePer = document.querySelector('.cookies__boton--per')
         const nuevosScripts = document.querySelector('#nuevosScripts');
+
+        const cookieVisitas = document.querySelector('#seguimientoVistas')
+        const cookieUltimo = document.querySelector('#ultimoElemento')
 
         //-----------------------------------------------------
         // Funciones
@@ -114,7 +138,11 @@
             // Oculta el HTML de cookies
             ocultarCookie();
             // Guarda que ha aceptado
-            localStorage.setItem('cookie', true);
+            if (!localStorage.getItem('cookieAceptadas')) {
+                localStorage.setItem('cookieAceptadas', true);
+                localStorage.setItem('cookieVisitas', 1)
+                localStorage.setItem('cookieUltimo', true)
+            }
             // Tu codigo a ejecutar si aceptan las cookies
             ejecutarSiAcepta();
         }
@@ -126,7 +154,19 @@
             // Oculta el HTML de cookies
             ocultarCookie();
             // Guarda que ha aceptado
-            localStorage.setItem('cookie', false);
+            localStorage.setItem('cookieAceptadas', false);
+
+        }
+
+        function personalizarCookies() {
+            ocultarCookie()
+
+            localStorage.setItem('cookieAceptadas', true);
+            if (cookieVisitas.checked)
+                localStorage.setItem('cookieVisitas', 1)
+            if (cookieUltimo.checked)
+                localStorage.setItem('cookieUltimo', true)
+
         }
 
         /**
@@ -148,17 +188,20 @@
           */
         function iniciar() {
             // Comprueba si en el pasado el usuario ha marcado una opción
-            if (localStorage.getItem('cookie') !== null) {
+            if (localStorage.getItem('cookieAceptadas') !== null) {
                 //aqui debería deshabilitar la web y solo dejar activo el mensaje de la cookie
                 //Y una vez acepte en el método tanto del si como del no, activamos de nuevo el html
-                if (localStorage.getItem('cookie') === 'true') {
+                if (localStorage.getItem('cookieAceptadas') === 'true') {
                     // Aceptó
                     aceptarCookies();
+
+
                 } else {
                     // No aceptó
                     denegarCookies();
                 }
             }
+
         }
 
         //-----------------------------------------------------
@@ -166,7 +209,7 @@
         //-----------------------------------------------------
         cookieSi.addEventListener('click', aceptarCookies, false);
         cookieNo.addEventListener('click', denegarCookies, false);
-
+        cookiePer.addEventListener('click', personalizarCookies, false)
         return {
             iniciar: iniciar
         }

@@ -1,11 +1,11 @@
-export { VistaFooter }
-const VistaFooter = Vue.createApp({
-	data() {
-		return {
-			controlador: null
-		}
-	},
-	template:`
+export function Footer(controlador) {
+    return Vue.createApp({
+        data() {
+            return {
+                controlador: controlador
+            }
+        },
+        template: `
         <div class="row p-4 bg-dark text-secondary align-middle">
             <div class="col-xs-12 col-md-6 col-lg-3">
                 <p class="h3">GESTIONACARS</p>
@@ -25,17 +25,18 @@ const VistaFooter = Vue.createApp({
         </div>
     `,
 
-	methods: {
-		mostrarTerminos(){
-            this.controlador.mostrarTerminos()
-        },
+        methods: {
+            mostrarTerminos() {
+                this.controlador.mostrarTerminos()
+            },
 
-        mostrarDatosEmpresa(){
-            this.controlador.mostrarDatosEmpresa()
-        },
-        mostrarContacto(){
-            this.controlador.mostrarContacto()
+            mostrarDatosEmpresa() {
+                this.controlador.mostrarDatosEmpresa()
+            },
+            mostrarContacto() {
+                this.controlador.mostrarContacto()
+            }
+
         }
-
-	}
-})
+    })
+}
