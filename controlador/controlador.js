@@ -108,7 +108,7 @@ class Controlador {
 	}
 	insertarCocheOK() {
 		//mensaje
-		//window.location.reload()
+		window.location.reload()
 	}
 
 	borrar(id) {
