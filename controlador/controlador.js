@@ -8,7 +8,6 @@ import { VistaFooter } from '../vista/vistafooter.js'
 import { VistaPolitica } from '../vista/vistapolitica.js'
 import { VistaPropiedad } from '../vista/vistapropiedad.js'
 
-
 import { Modelo } from '../modelo/modelo.js'
 class Controlador {
 	constructor() {
@@ -26,6 +25,8 @@ class Controlador {
 		this.vistaFooter = new VistaFooter(this).mount('#footer')
 		this.modelo = new Modelo(this, this.buscar.bind(this))
 		this.mostrarIndex()
+
+		this.masinfo = $('#masInformación').on('click', this.mostrarMasInformacion.bind(this))
 	}
 
 	/**
@@ -92,6 +93,10 @@ class Controlador {
 		this.vistaFormularioC.mostrar(true)
 	}
 
+	mostrarMasInformacion() {
+		this.ocultarTodo()
+		this.mostrarPolitica()	
+	}
 	/**
 	 * MÉTODOS PARA TRAER Y LLEVAR DATOS AL MODELO
 	 */
