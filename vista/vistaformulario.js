@@ -19,7 +19,7 @@ export function VistaFormulario(controlador) {
 					extra4: false,
 					extra5: false,
 					imagen: false,
-					base64: null,
+					base64: false,
 					precio: 0
 
 				}
@@ -103,12 +103,19 @@ export function VistaFormulario(controlador) {
 				</div>
 			</div>
 		</div>
-		<div class="row mb-3">
-			<div class="col-2" style="display: none;" id="divImagenPrevia">
+		<div class="row mb-3 mt-5">
+			<div class="col-12" style="display: none;" id="divImagenPrevia">
+			<div class="row">
 				<span>VistaPrevia</span>
-				<img :src=coche.imagen id="imagenPrevia" width="95%" alt="imagen en pequeño del coche">
 			</div>
-			<div class="col-10">
+			<div class="row">
+				<img :src=coche.base64 id="imagenPrevia" alt="imagen en pequeño del coche">
+			</div>
+				
+				
+			</div>
+			<div class="col-xs-12"></div>
+			<div class="col-12">
 				<label for="imagen" class="form-label">Elije Imagen</label>
 				<input class="form-control" type="file" id="imagen" name="imagen" @change=capturarImagen :src=coche.imagen>
 			</div>
@@ -333,13 +340,15 @@ export function VistaFormulario(controlador) {
 					newCoche.enFabricacion = this.coche.enFab
 					newCoche.extras = extras
 					newCoche.descripcion = this.coche.descripcion
-					newCoche.imagen = this.coche.base64
 					newCoche.precio = this.coche.precio
+					
+
+					if (this.coche.base64 == null)
+						newCoche.imagen = this.coche.imagen
+					else
+						newCoche.imagen = this.coche.base64
 
 					//los mando al controlador
-
-					//falla imagen
-
 					this.controlador.modificarCoche(this.coche.id, newCoche)
 
 				}

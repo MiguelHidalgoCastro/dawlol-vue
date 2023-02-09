@@ -23,6 +23,13 @@ button,
 	width: 5em;
 }
 
+#imagenPrevia{
+	width: 240px;
+}
+#imagenLista{
+	width: 120px;
+}
+
 .cookies {
 	position: fixed;
 	bottom: 0;

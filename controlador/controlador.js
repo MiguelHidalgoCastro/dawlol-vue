@@ -1,30 +1,29 @@
-import { Menu } from '../vista/menu.js'
+import { VistaMenu } from '../vista/vistamenu.js'
 import { VistaLista } from '../vista/vistalista.js'
 import { VistaFormulario } from '../vista/vistaformulario.js'
 import { VistaFormularioContacto } from '../vista/vistaformulariocontacto.js'
 import { VistaAvisoLegal } from '../vista/vistaavisolegal.js'
 import { VistaTerminos } from '../vista/vistaterminos.js'
-import { Footer } from '../vista/footer.js'
-
-import { Modelo } from '../modelo/modelo.js'
-
+import { VistaFooter } from '../vista/vistafooter.js'
 import { VistaPolitica } from '../vista/vistapolitica.js'
 import { VistaPropiedad } from '../vista/vistapropiedad.js'
 
+
+import { Modelo } from '../modelo/modelo.js'
 class Controlador {
 	constructor() {
 		window.onload = this.iniciar.bind(this)
 	}
 	iniciar() {
-		this.menu = new Menu(this).mount('#navbar')
+		this.menu = new VistaMenu(this).mount('#navbar')
 		this.vistaLista = new VistaLista(this).mount('#vistaListaCRUD')
 		this.vistaFormulario = new VistaFormulario(this).mount('#vistaFormulario')
 		this.vistaFormularioC = new VistaFormularioContacto(this).mount('#formularioContacto')
 		this.vistaAvisoLegal = new VistaAvisoLegal(this).mount('#datosAviso')
 		this.vistaTerminos = new VistaTerminos(this).mount("#terminos")
-		this.vistaPolitica = new VistaPolitica(this).mount('#vCookies')
+		this.vistaPolitica = new VistaPolitica(this).mount('#vPoliticaCookies')
 		this.vistaPropiedad = new VistaPropiedad(this).mount("#propiedad")
-		this.vistaFooter = new Footer(this).mount('#footer')
+		this.vistaFooter = new VistaFooter(this).mount('#footer')
 		this.modelo = new Modelo(this, this.buscar.bind(this))
 		this.mostrarIndex()
 	}
@@ -63,6 +62,7 @@ class Controlador {
 		this.vistaFormulario.coche.extra4 = coche.extras[3]
 		this.vistaFormulario.coche.extra5 = coche.extras[4]
 		this.vistaFormulario.coche.imagen = coche.imagen
+		this.vistaFormulario.coche.base64 = coche.imagen
 		this.vistaFormulario.coche.fecha = coche.fechaFabricacion
 		$('#divImagenPrevia').css({ 'display': 'inline-block' })
 		$('#imagenPrevia').attr('width', '100')
@@ -101,20 +101,21 @@ class Controlador {
 	}
 	buscarOK(lista) {
 		this.vistaLista.listar(lista)
-		//leer json
 	}
 
 	insertarCoche(coche) {
 		this.modelo.insertar(coche, this.insertarCocheOK.bind(this))
 	}
 	insertarCocheOK() {
-		window.location.reload()
+		//mensaje
+		//window.location.reload()
 	}
 
 	borrar(id) {
 		this.modelo.borrar(id, this.borrarOK.bind(this))
 	}
 	borrarOK() {
+		//mensaje
 		window.location.reload()
 	}
 	modificar(id) {
@@ -125,7 +126,8 @@ class Controlador {
 		this.modelo.insertarCochePorID(id, coche, this.modificarCocheOK.bind(this))
 	}
 	modificarCocheOK() {
-		console.log('modificado');
+		//mensaje
+		window.location.reload()
 	}
 }
 new Controlador()

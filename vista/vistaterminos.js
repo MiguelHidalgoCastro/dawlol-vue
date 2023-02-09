@@ -11,9 +11,9 @@ export function VistaTerminos(controlador) {
     <div class="container" :class=clase>
     <h1>Términos y Condiciones</h1>
     <p>
-        Identidad: Webs Almendralejo - NIF: 45557964Y
+        Identidad: Gestionacars SLU - NIF: 45557964Y
         Dirección postal: Empresa de desarrollo de software
-        Teléfono: 619883479 - Correo electrónico: websalmendralejo0@gmail.com
+        Teléfono: 619883479 - Correo electrónico: contacto@gestionacars.es.
 
         “En Webs Almendralejo tratamos la información que nos facilita con el fin de prestarles el servicio
         solicitado y realizar su facturación. Los datos proporcionados se conservarán mientras se mantenga la

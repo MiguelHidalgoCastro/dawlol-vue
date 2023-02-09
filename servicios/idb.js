@@ -43,8 +43,10 @@ export class Idb {
         peticion.onerror = (evento) => { console.log('No se ha podido agregar el coche a la bbdd'); }
         peticion.onsuccess = (evento) => {
             objeto.id = peticion.result
-            if (localStorage.getItem('cookieAceptadas') == true)
+            if (localStorage.getItem('cookieAceptadas') == 'true') {
                 localStorage.setItem('cookieUltimo', objeto.id)
+                document.cookie = 'cookieUltimo=' + objeto.id
+            }
             callback()
         }
     }

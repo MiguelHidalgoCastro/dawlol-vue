@@ -1,4 +1,4 @@
-export function Footer(controlador) {
+export function VistaFooter(controlador) {
     return Vue.createApp({
         data() {
             return {

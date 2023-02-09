@@ -1,5 +1,5 @@
-export function Menu(controlador) {
-	return Menu = Vue.createApp({
+export function VistaMenu(controlador) {
+	return Vue.createApp({
 		data() {
 			return {
 				controlador: controlador

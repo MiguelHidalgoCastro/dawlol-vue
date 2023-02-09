@@ -8,8 +8,7 @@ export function VistaFormularioContacto(controlador) {
             }
         },
         template: `
-<div class="mt-5" :class=clase>
-    <div class="container">
+<div :class=clase>
             <div class="container">
                 <h4>GESTIONACARS</h4>
             </div>
@@ -54,7 +53,6 @@ export function VistaFormularioContacto(controlador) {
                     </div>
                 </div>
             </div>
-        </div>
 </div>    `,
         methods: {
             mostrar(activo) {

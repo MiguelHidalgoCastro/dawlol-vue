@@ -15,75 +15,72 @@
 
 <body>
     <main>
-
-
         <!--Navbar-->
         <nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm justify-content-between" id="navbar">
 
         </nav>
         <!--Vista Lista-->
-        <div id="vistaListaCRUD">
+        <div id="vistaListaCRUD" class="mt-3">
 
         </div>
         <!--Vista Formulario-->
-        <div id="vistaFormulario">
+        <div id="vistaFormulario" class="mt-3">
 
         </div>
         <!--Formulario contacto-->
-        <div id="formularioContacto">
+        <div id="formularioContacto" class="mt-3">
 
         </div>
         <!--Datos Empresa-->
-        <div id="datosAviso">
+        <div id="datosAviso" class="mt-3">
 
         </div>
-
-        <!--Vista Cookies-->
-        <div id="vCookies">
-
-        </div>
-
-        <!--Vista Cookies-->
-        <div id="propiedad">
+        <!--Vista Propiedad-->
+        <div id="propiedad" class="mt-3">
 
         </div>
-
-        
         <!--Términos y condiciones-->
-        <div id="terminos">
+        <div id="terminos" class="mt-3">
+
+        </div>
+        <!--Vista Cookies-->
+        <div id="vPoliticaCookies" class="mt-3">
 
         </div>
 
-        <section class="cookies">
-            <h2 class="cookies__titulo">¿Aceptas nuestras Cookies?</h2>
-            <p class="cookies__texto">Usamos cookies para mejorar tu experiencia en la web.</p>
-            <p class="cookies__texto" id="terms"><u>Más Información</u></p>
+        <!---->
+        <div id="vistaCookies">
+            <section class="cookies">
+                <h2 class="cookies__titulo">¿Aceptas nuestras Cookies?</h2>
+                <p class="cookies__texto">Usamos cookies para mejorar tu experiencia en la web.</p>
+                <p class="cookies__texto" id="terms"><u>Más Información</u></p>
 
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-4">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="seguimientoVistas">Seguimiento de Visitas de
-                            usuario</label>
-                        <input class="form-check-input" type="checkbox" id="seguimientoVistas">
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <div class="form-check form-switch">
+                            <label class="form-check-label" for="seguimientoVistas">Seguimiento de Visitas de
+                                usuario</label>
+                            <input class="form-check-input" type="checkbox" id="seguimientoVistas">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-check form-switch">
+                            <label class="form-check-label" for="ultimoElemento">Ultimo Elemento Insertado</label>
+                            <input class="form-check-input" type="checkbox" id="ultimoElemento">
+                        </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="ultimoElemento">Ultimo Elemento Insertado</label>
-                        <input class="form-check-input" type="checkbox" id="ultimoElemento">
-                    </div>
+                <div class="cookies__botones">
+                    <button class="cookies__boton cookies__boton--no">No</button>
+                    <button class="cookies__boton cookies__boton--si">Si</button>
+                    <button class="cookies__boton cookies__boton--per">Personalizado</button>
                 </div>
-            </div>
-            <div class="cookies__botones">
-                <button class="cookies__boton cookies__boton--no">No</button>
-                <button class="cookies__boton cookies__boton--si">Si</button>
-                <button class="cookies__boton cookies__boton--per">Personalizado</button>
-            </div>
-        </section>
+            </section>
 
-        <!-- No borrar, aquí se generarán todas las etiquetas <script> si acepta el usuario -->
-        <div id="nuevosScripts"></div>
+            <!-- No borrar, aquí se generarán todas las etiquetas <script> si acepta el usuario -->
+            <div id="nuevosScripts"></div>
+        </div>
     </main>
     <!--Footer-->
     <div class="container-fluid pt-5" id="footer">
@@ -114,10 +111,26 @@
 
         function contenidoScriptsCookies() {
             let veces = parseInt(localStorage.getItem('cookieVisitas'))
-            //console.log(veces);
             localStorage.setItem('cookieVisitas', ++veces)
+
+            let cuantasVisitas = leerCookie()
+            cuantasVisitas = parseInt(cuantasVisitas)
+            cuantasVisitas = cuantasVisitas + 1
+            document.cookie = 'cookieVisitas=' + cuantasVisitas
         }
 
+        function leerCookie() {
+            let micookie = ''
+            let lista = document.cookie.split(";");
+            for (i in lista) {
+                let busca = lista[i].search('cookieVisitas');
+                if (busca > -1) { micookie = lista[i] }
+            }
+            let igual = micookie.indexOf("=");
+            let valor = micookie.substring(igual + 1);
+            return valor;
+
+        }
 
         //-----------------------------------------------------
         // Variables
@@ -152,8 +165,12 @@
             // Guarda que ha aceptado
             if (!localStorage.getItem('cookieAceptadas')) {
                 localStorage.setItem('cookieAceptadas', true);
-                localStorage.setItem('cookieVisitas', 1)
-                localStorage.setItem('cookieUltimo', true)
+                localStorage.setItem('cookieVisitas', 0)
+                localStorage.setItem('cookieUltimo', 0)
+
+                document.cookie = "cookieAceptadas=true"
+                document.cookie = "cookieVisitas=0"
+                document.cookie = "cookieUltimo=0"
             }
             // Tu codigo a ejecutar si aceptan las cookies
             ejecutarSiAcepta();
@@ -167,6 +184,7 @@
             ocultarCookie();
             // Guarda que ha aceptado
             localStorage.setItem('cookieAceptadas', false);
+            document.cookie = 'cookieAceptadas=false'
 
         }
 
@@ -174,10 +192,15 @@
             ocultarCookie()
 
             localStorage.setItem('cookieAceptadas', true);
-            if (cookieVisitas.checked)
-                localStorage.setItem('cookieVisitas', 1)
-            if (cookieUltimo.checked)
-                localStorage.setItem('cookieUltimo', true)
+            document.cookie = 'cookieAceptadas=true'
+            if (cookieVisitas.checked) {
+                localStorage.setItem('cookieVisitas', 0)
+                document.cookie = 'cookieVisitas=0'
+            }
+            if (cookieUltimo.checked) {
+                localStorage.setItem('cookieUltimo', 0)
+                document.cookie = 'cookieUltimo=0'
+            }
 
         }
 

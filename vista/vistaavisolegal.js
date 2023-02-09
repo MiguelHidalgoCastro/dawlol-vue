@@ -9,7 +9,7 @@ export function VistaAvisoLegal(controlador) {
 		},
 		template: `
 	<div class="container" :class=clase>
-		<div class="containe-fluid border mt-3">
+		<div class="container-fluid">
 			<h1>Aviso Legal</h1>
 			<p>
 			La presente página web, con dirección URL www.gestionacars.es, 
