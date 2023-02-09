@@ -104,13 +104,13 @@ export function VistaFormulario(controlador) {
 			</div>
 		</div>
 		<div class="row mb-3">
-			<div class="col-1" style="display: none;" id="divImagenPrevia">
+			<div class="col-2" style="display: none;" id="divImagenPrevia">
 				<span>VistaPrevia</span>
-				<img src="" id="imagenPrevia" width="95%" alt="imagen en pequeño del coche">
+				<img :src=coche.imagen id="imagenPrevia" width="95%" alt="imagen en pequeño del coche">
 			</div>
-			<div class="col">
+			<div class="col-10">
 				<label for="imagen" class="form-label">Elije Imagen</label>
-				<input class="form-control" type="file" id="imagen" name="imagen" @change=capturarImagen>
+				<input class="form-control" type="file" id="imagen" name="imagen" @change=capturarImagen :src=coche.imagen>
 			</div>
 
 		</div>
@@ -257,8 +257,93 @@ export function VistaFormulario(controlador) {
 			},
 			atras() {
 				window.location.reload()
-			}
+			},
 
+			modificar() {
+				//Valido campos
+				let mensaje = ''
+				let mostrarAlerta = false
+
+				// Expresiones regulares
+				let expMarca = /^[A-Z][A-z]{3,20}$/
+				if (!expMarca.test(this.coche.marca)) {
+					if (mensaje == '')
+						mensaje = "La marca debe de tener la primera letra mayúscula, sin números y un máximo de 20 caracteres"
+
+					mostrarAlerta = true
+				}
+
+				let expModelo = /^[A-Z0-9][A-z0-9]{1,20}$/
+				if (!expModelo.test(this.coche.modelo)) {
+					if (mensaje == '')
+						mensaje = "Modelo debe de tener la primera letra mayúscula y mínimo dos caracteres, máximo 20"
+					else
+						mensaje = mensaje + "\nModelo debe de tener la primera letra mayúscula y mínimo dos caracteres, máximo 20"
+					mostrarAlerta = true
+				}
+
+				if (this.coche.fecha == '') {
+					if (mensaje == '')
+						mensaje = "Selecciona una fecha valida"
+					else
+						mensaje = mensaje + "\nSelecciona una fecha valida"
+					mostrarAlerta = true
+				}
+				else {
+					//cuando la fecha sea mayor que la de hoy, enfabricación no puede ser si
+					//enfab por defecto va a ser si
+				}
+
+
+				if (this.coche.descripcion == '')
+					this.coche.descripcion = 'No descripción'
+
+				if (mostrarAlerta)
+					alert(mensaje)
+
+				else {
+					let newCoche = new Coche()
+
+					let extras = []
+
+					if (this.coche.extra1)
+						extras.push(true)
+					else
+						extras.push(false)
+					if (this.coche.extra2)
+						extras.push(true)
+					else
+						extras.push(false)
+					if (this.coche.extra3)
+						extras.push(true)
+					else
+						extras.push(false)
+					if (this.coche.extra4)
+						extras.push(true)
+					else
+						extras.push(false)
+					if (this.coche.extra5)
+						extras.push(true)
+					else
+						extras.push(false)
+
+					newCoche.marca = this.coche.marca
+					newCoche.modelo = this.coche.modelo
+					newCoche.fechaFabricacion = this.coche.fecha
+					newCoche.enFabricacion = this.coche.enFab
+					newCoche.extras = extras
+					newCoche.descripcion = this.coche.descripcion
+					newCoche.imagen = this.coche.base64
+					newCoche.precio = this.coche.precio
+
+					//los mando al controlador
+
+					//falla imagen
+
+					this.controlador.modificarCoche(this.coche.id, newCoche)
+
+				}
+			}
 		}
 	})
 

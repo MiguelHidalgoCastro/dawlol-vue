@@ -133,7 +133,7 @@ export function VistaLista(controlador) {
 					<td>{{coche.precio}}€</td>
 					<td>
 						<a class="btn btn-secondary me-1" @click=consultar(coche.id)><em class="bi bi-search"></em></a>
-						<a class="btn btn-warning me-1" @click=modificar(coche.id)><em class="bi bi-pencil-square"></em></a>
+						<a class="btn btn-warning me-1" @click=modificar(coche)><em class="bi bi-pencil-square"></em></a>
 						<a class="btn btn-danger" @click=borrar(coche.id)><em class="bi bi-trash-fill"></em></a>
 					</td>
 				</tr>
@@ -163,9 +163,9 @@ export function VistaLista(controlador) {
 			consultar(id) {
 				console.log(id);
 			},
-			modificar(id) {
-				console.log(id);
-				//this.controlador.mostrarModificar(id)
+			modificar(coche) {
+				console.log(coche.id);
+				this.controlador.mostrarModificar(coche)
 			},
 
 			borrar(id) {

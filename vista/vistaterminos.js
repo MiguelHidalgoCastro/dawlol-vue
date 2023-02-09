@@ -1,13 +1,13 @@
-export { VistaTerminos }
-const VistaTerminos = Vue.createApp({
-    data() {
-        return {
-            controlador: null,
-            titulo: 'Vista Terminos',
-            clase: 'inactivo'
-        }
-    },
-    template: `
+export function VistaTerminos(controlador) {
+    return Vue.createApp({
+        data() {
+            return {
+                controlador: controlador,
+                titulo: 'Vista Terminos',
+                clase: 'inactivo'
+            }
+        },
+        template: `
     <div class="container" :class=clase>
     <h1>Términos y Condiciones</h1>
     <p>
@@ -30,17 +30,19 @@ const VistaTerminos = Vue.createApp({
         Asimismo, solicitamos su autorización para ofrecerle productos y servicios relacionados con los contratados
         y fidelizarle como cliente.”
     </p>
-        Acepto sin reservas la Política de Protección de Datos personales
-        SI NO
+    <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="acepto">
+        <label class="form-check-label" for="acepto">Acepto sin reservas la Política de Protección de Datos personales</label>
+    </div>
         </div>`,
 
-    /*'<p><span @click=handler1>Vista Lista</span> <span @click=handler2>Vista Formulario</span></p>',*/
-    methods: {
-        mostrar(activo) {
-			if (activo)
-				this.clase = 'activo'
-			else
-				this.clase = 'inactivo'
-		}
-    }
-})
+        methods: {
+            mostrar(activo) {
+                if (activo)
+                    this.clase = 'activo'
+                else
+                    this.clase = 'inactivo'
+            }
+        }
+    })
+}

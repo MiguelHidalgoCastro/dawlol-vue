@@ -1,13 +1,13 @@
-export { VistaFormularioContacto }
-const VistaFormularioContacto = Vue.createApp({
-    data() {
-        return {
-            controlador: null,
-            titulo: 'Vista Formulario Contacto',
-            clase: 'inactivo'
-        }
-    },
-    template: `
+export function VistaFormularioContacto(controlador) {
+    return Vue.createApp({
+        data() {
+            return {
+                controlador: controlador,
+                titulo: 'Vista Formulario Contacto',
+                clase: 'inactivo'
+            }
+        },
+        template: `
 <div class="mt-5" :class=clase>
     <div class="container">
             <div class="container">
@@ -56,15 +56,16 @@ const VistaFormularioContacto = Vue.createApp({
             </div>
         </div>
 </div>    `,
-    methods: {
-        mostrar(activo) {
-            if (activo)
-                this.clase = 'activo'
-            else
-                this.clase = 'inactivo'
-        },
-        mostrarTerminos(){
-            this.controlador.mostrarTerminos()
+        methods: {
+            mostrar(activo) {
+                if (activo)
+                    this.clase = 'activo'
+                else
+                    this.clase = 'inactivo'
+            },
+            mostrarTerminos() {
+                this.controlador.mostrarTerminos()
+            }
         }
-    }
-})
+    })
+}

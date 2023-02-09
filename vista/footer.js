@@ -6,17 +6,23 @@ export function Footer(controlador) {
             }
         },
         template: `
-        <div class="row p-4 bg-dark text-secondary align-middle">
-            <div class="col-xs-12 col-md-6 col-lg-3">
+        <div class="row p-4 bg-dark text-secondary">
+            <div class="col-xs-12 col-md-6 col-lg-2">
                 <p class="h3">GESTIONACARS</p>
             </div>
-            <div class="col-xs-12 col-md-6 col-lg-3">
+            <div class="col-xs-12 col-md-6 col-lg-2">
                 <span class="h5 text-decoration-none" @click=mostrarTerminos>Términos & Condiciones</span>
             </div>
-            <div class="col-xs-12 col-md-6 col-lg-3">
-                <span class="h5 text-decoration-none" @click=mostrarDatosEmpresa>Datos de la empresa</span>
+            <div class="col-xs-12 col-md-6 col-lg-2">
+                <span class="h5 text-decoration-none" @click=mostrarAvisosLegales>Avisos Legales</span>
             </div>
-            <div class="col-xs-12 col-md-6 col-lg-3">
+            <div class="col-xs-12 col-md-6 col-lg-2">
+                <span class="h5 text-decoration-none" @click=mostrarPolitica>Política de Cookies</span>
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-2">
+                <span class="h5 text-decoration-none" @click=mostrarPropiedad>Propiedad Intelectual</span>
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-2">
                 <span class="h5 text-decoration-none" @click=mostrarContacto>Contacto</span>
             </div>
             <div class="col-xs-12">
@@ -30,11 +36,17 @@ export function Footer(controlador) {
                 this.controlador.mostrarTerminos()
             },
 
-            mostrarDatosEmpresa() {
-                this.controlador.mostrarDatosEmpresa()
+            mostrarAvisosLegales() {
+                this.controlador.mostrarAvisosLegales()
             },
             mostrarContacto() {
                 this.controlador.mostrarContacto()
+            },
+            mostrarPolitica() {
+                this.controlador.mostrarPolitica()
+            },
+            mostrarPropiedad() {
+                this.controlador.mostrarPropiedad()
             }
 
         }

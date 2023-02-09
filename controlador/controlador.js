@@ -2,49 +2,30 @@ import { Menu } from '../vista/menu.js'
 import { VistaLista } from '../vista/vistalista.js'
 import { VistaFormulario } from '../vista/vistaformulario.js'
 import { VistaFormularioContacto } from '../vista/vistaformulariocontacto.js'
-import { VistaDatosEmpresa } from '../vista/vistadatosempresa.js'
+import { VistaAvisoLegal } from '../vista/vistaavisolegal.js'
 import { VistaTerminos } from '../vista/vistaterminos.js'
 import { Footer } from '../vista/footer.js'
 
 import { Modelo } from '../modelo/modelo.js'
+
+import { VistaPolitica } from '../vista/vistapolitica.js'
+import { VistaPropiedad } from '../vista/vistapropiedad.js'
 
 class Controlador {
 	constructor() {
 		window.onload = this.iniciar.bind(this)
 	}
 	iniciar() {
-
-		//this.menu = Menu.mount('#navbar')
-		//this.menu.controlador = this
 		this.menu = new Menu(this).mount('#navbar')
-
-		//this.vistaLista = VistaLista.mount('#vistaListaCRUD')
-		//this.vistaLista.controlador = this
 		this.vistaLista = new VistaLista(this).mount('#vistaListaCRUD')
-
-		//this.vistaFormulario = VistaFormulario.mount('#vistaFormulario')
-		//this.vistaFormulario.controlador = this
 		this.vistaFormulario = new VistaFormulario(this).mount('#vistaFormulario')
-
-
-		this.vistaFormularioC = VistaFormularioContacto.mount('#formularioContacto')
-		this.vistaFormularioC.controlador = this
-
-		this.vistaDatosEmpresa = VistaDatosEmpresa.mount('#datosEmpresa')
-		this.vistaDatosEmpresa.controlador = this
-
-		this.vistaTerminos = VistaTerminos.mount("#terminos")
-		this.vistaTerminos.controlador = this
-
-		//this.vistaFooter = Footer.mount("#footer")
-		//this.vistaFooter.controlador = this
+		this.vistaFormularioC = new VistaFormularioContacto(this).mount('#formularioContacto')
+		this.vistaAvisoLegal = new VistaAvisoLegal(this).mount('#datosAviso')
+		this.vistaTerminos = new VistaTerminos(this).mount("#terminos")
+		this.vistaPolitica = new VistaPolitica(this).mount('#vCookies')
+		this.vistaPropiedad = new VistaPropiedad(this).mount("#propiedad")
 		this.vistaFooter = new Footer(this).mount('#footer')
-
 		this.modelo = new Modelo(this, this.buscar.bind(this))
-
-
-
-
 		this.mostrarIndex()
 	}
 
@@ -55,8 +36,10 @@ class Controlador {
 		this.vistaLista.mostrar(false)
 		this.vistaFormulario.mostrar(false)
 		this.vistaFormularioC.mostrar(false)
-		this.vistaDatosEmpresa.mostrar(false)
+		this.vistaAvisoLegal.mostrar(false)
 		this.vistaTerminos.mostrar(false)
+		this.vistaPolitica.mostrar(false)
+		this.vistaPropiedad.mostrar(false)
 	}
 
 	mostrarIndex() {
@@ -69,22 +52,40 @@ class Controlador {
 		this.vistaFormulario.mostrar(true, 'crear')
 	}
 
-	mostrarModificar(id) {
+	mostrarModificar(coche) {
 		this.ocultarTodo()
 		this.vistaFormulario.mostrar(true, 'modificar')
+		this.vistaFormulario.coche = coche
+		this.vistaFormulario.coche.enFab = coche.enFabricacion
+		this.vistaFormulario.coche.extra1 = coche.extras[0]
+		this.vistaFormulario.coche.extra2 = coche.extras[1]
+		this.vistaFormulario.coche.extra3 = coche.extras[2]
+		this.vistaFormulario.coche.extra4 = coche.extras[3]
+		this.vistaFormulario.coche.extra5 = coche.extras[4]
+		this.vistaFormulario.coche.imagen = coche.imagen
+		this.vistaFormulario.coche.fecha = coche.fechaFabricacion
+		$('#divImagenPrevia').css({ 'display': 'inline-block' })
+		$('#imagenPrevia').attr('width', '100')
 	}
 	mostrarConsultar() {
 		this.ocultarTodo()
 		this.vistaFormulario.mostrar(true, 'consultar')
 	}
-
 	mostrarTerminos() {
 		this.ocultarTodo()
 		this.vistaTerminos.mostrar(true)
 	}
-	mostrarDatosEmpresa() {
+	mostrarAvisosLegales() {
 		this.ocultarTodo()
-		this.vistaDatosEmpresa.mostrar(true)
+		this.vistaAvisoLegal.mostrar(true)
+	}
+	mostrarPolitica() {
+		this.ocultarTodo()
+		this.vistaPolitica.mostrar(true)
+	}
+	mostrarPropiedad() {
+		this.ocultarTodo()
+		this.vistaPropiedad.mostrar(true)
 	}
 	mostrarContacto() {
 		this.ocultarTodo()
@@ -116,8 +117,15 @@ class Controlador {
 	borrarOK() {
 		window.location.reload()
 	}
-	modificar(id){
+	modificar(id) {
 		this.mostrarModificar(id)
+	}
+
+	modificarCoche(id, coche) {
+		this.modelo.insertarCochePorID(id, coche, this.modificarCocheOK.bind(this))
+	}
+	modificarCocheOK() {
+		console.log('modificado');
 	}
 }
 new Controlador()
